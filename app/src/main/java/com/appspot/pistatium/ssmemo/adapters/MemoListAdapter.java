@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.appspot.pistatium.ssmemo.R;
+import com.appspot.pistatium.ssmemo.SSMemoApplication;
 import com.appspot.pistatium.ssmemo.models.Memo;
 
 import java.util.List;
@@ -26,8 +28,11 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+        SSMemoApplication app = (SSMemoApplication)getContext();
         if (view == null) {
             view = inflater.inflate(R.layout.memo_cell, null);
+            app.setAppFont((TextView) view.findViewById(R.id.memo_text));
+
         }
         //Memo memo = getItem(position);
         return view;
