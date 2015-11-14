@@ -29,7 +29,7 @@ public class SSMemoApplication extends Application {
             return;
         }
 
-        String font_file = unzipFile("fonts/HuiFont29.zip");
+        String font_file = unzipFile("fonts/JKG-M_3.zip");
         app_font = Typeface.createFromFile(font_file);
     }
 

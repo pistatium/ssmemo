@@ -25,5 +25,6 @@ public class MainActivity extends AppCompatActivity {
         List<Memo> memos = new ArrayList<>();
         lvMemo.setDivider(null);
         lvMemo.setAdapter(new MemoListAdapter(getApplicationContext(), R.id.memo_text , memos));
+
     }
 }
