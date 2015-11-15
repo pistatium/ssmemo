@@ -1,5 +1,6 @@
 package com.appspot.pistatium.ssmemo;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         ListView lvMemo = (ListView) findViewById(R.id.memo_list);
         List<Memo> memos = new ArrayList<>();
         lvMemo.setDivider(null);
-        lvMemo.setAdapter(new MemoListAdapter(getApplicationContext(), R.id.memo_text, memos));
+        lvMemo.setAdapter(new MemoListAdapter(this, R.id.memo_text, memos));
 
     }
 

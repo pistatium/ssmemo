@@ -1,12 +1,17 @@
 package com.appspot.pistatium.ssmemo.adapters;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.appspot.pistatium.ssmemo.EditActivity;
 import com.appspot.pistatium.ssmemo.R;
 import com.appspot.pistatium.ssmemo.SSMemoApplication;
 import com.appspot.pistatium.ssmemo.models.Memo;
@@ -28,12 +33,20 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        SSMemoApplication app = (SSMemoApplication)getContext();
+        SSMemoApplication app = (SSMemoApplication)getContext()g.getApplicationContext();
         if (view == null) {
             view = inflater.inflate(R.layout.memo_cell, null);
             app.setAppFont((TextView) view.findViewById(R.id.memo_text));
 
         }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = getContext();
+                Intent i = EditActivity.getIntent(context);
+                context.startActivity(i);
+            }
+        });
         //Memo memo = getItem(position);
         return view;
     }
@@ -42,4 +55,5 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
     public int getCount() {
         return 10;
     }
+
 }
