@@ -27,6 +27,7 @@
             android:layout_margin="10dp"
             android:elevation="5dp"
             android:alpha="0.9"
+            android:onClick="onClickEdit"
             card_view:cardCornerRadius="3dp">
             <TextView
                 android:id="@+id/button_input_text"
@@ -34,7 +35,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/weekText"
                 android:textSize="20dp"
-                android:text=" + Input here"/>
+                android:text=" + Input here"
+                />
 
         </android.support.v7.widget.CardView>
 

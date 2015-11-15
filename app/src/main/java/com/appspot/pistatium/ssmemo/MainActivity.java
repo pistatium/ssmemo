@@ -1,10 +1,12 @@
 package com.appspot.pistatium.ssmemo;
 
+import android.content.Intent;
 import android.support.v4.view.WindowCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -34,5 +36,10 @@ public class MainActivity extends AppCompatActivity {
         lvMemo.setDivider(null);
         lvMemo.setAdapter(new MemoListAdapter(getApplicationContext(), R.id.memo_text, memos));
 
+    }
+
+    public void onClickEdit(View view) {
+        Intent i = EditActivity.getIntent(getApplicationContext());
+        startActivity(i);
     }
 }
