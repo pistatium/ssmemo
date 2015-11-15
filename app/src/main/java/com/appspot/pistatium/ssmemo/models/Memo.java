@@ -1,5 +1,6 @@
 package com.appspot.pistatium.ssmemo.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -7,7 +8,7 @@ import io.realm.RealmObject;
 /**
  * Created by kimihiro on 2015/11/08.
  */
-public class Memo extends RealmObject {
+public class Memo extends RealmObject implements Serializable {
 
     private String title = "";
     private String memo = "";

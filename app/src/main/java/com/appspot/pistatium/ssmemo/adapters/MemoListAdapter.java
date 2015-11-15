@@ -1,9 +1,6 @@
 package com.appspot.pistatium.ssmemo.adapters;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +30,7 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
+        final Memo memo = getItem(position);
         SSMemoApplication app = (SSMemoApplication)getContext().getApplicationContext();
         if (view == null) {
             view = inflater.inflate(R.layout.memo_cell, null);
@@ -43,17 +41,12 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
             @Override
             public void onClick(View view) {
                 Context context = getContext();
-                Intent i = EditActivity.getIntent(context);
+                Intent i = EditActivity.createIntent(context, memo);
                 context.startActivity(i);
             }
         });
         //Memo memo = getItem(position);
         return view;
-    }
-
-    @Override
-    public int getCount() {
-        return 10;
     }
 
 }
