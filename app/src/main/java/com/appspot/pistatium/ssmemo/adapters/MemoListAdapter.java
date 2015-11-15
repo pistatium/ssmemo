@@ -33,7 +33,7 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        SSMemoApplication app = (SSMemoApplication)getContext()g.getApplicationContext();
+        SSMemoApplication app = (SSMemoApplication)getContext().getApplicationContext();
         if (view == null) {
             view = inflater.inflate(R.layout.memo_cell, null);
             app.setAppFont((TextView) view.findViewById(R.id.memo_text));
