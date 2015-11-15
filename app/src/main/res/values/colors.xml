@@ -5,4 +5,5 @@
     <color name="colorAccent">#aea14e</color>
     <color name="baseBackground">#f5f5f5</color>
     <color name="baseText">#080303</color>
+    <color name="weekText">#383b64</color>
 </resources>
