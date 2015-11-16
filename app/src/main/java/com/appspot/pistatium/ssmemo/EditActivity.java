@@ -2,15 +2,17 @@ package com.appspot.pistatium.ssmemo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.appspot.pistatium.ssmemo.models.Memo;
 import com.appspot.pistatium.ssmemo.models.MemoModel;
+
+import java.util.Date;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -19,26 +21,25 @@ public class EditActivity extends AppCompatActivity {
 
     private Memo memo;
     private MemoModel memoModel;
-    private TextView tvInputMemo;
+    private EditText tvInputMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        tvInputMemo = (TextView)findViewById(R.id.tv_input_memo);
+        tvInputMemo = (EditText)findViewById(R.id.et_input_memo);
 
         memoModel = new MemoModel(getApplicationContext());
 
         long memo_id = getIntent().getLongExtra(EXTRA_MEMO_KEY, ID_NOT_SET);
         memo = memoModel.findById(memo_id);
-        Log.d("memo", "id:" + memo.getId());
 
         if (memo == null) {
             memo = memoModel.create();
         }
         Log.d("memo", "id:" + memo.getId());
-        Log.d("memo", "title:" + memo.getTitle());
+        Log.d("memo", "memo:" + memo.getMemo());
     }
 
     @Override
@@ -59,8 +60,10 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickDone(View view) {
+        memoModel.beginTransaction();
         memo.setMemo(tvInputMemo.getText().toString());
-        memoModel.update(memo);
+        memo.setUpdatedAt(new Date());
+        memoModel.commitTransaction();
         finishAfterTransition();
     }
 }

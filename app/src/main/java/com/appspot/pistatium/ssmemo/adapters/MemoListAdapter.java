@@ -34,9 +34,10 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
         SSMemoApplication app = (SSMemoApplication)getContext().getApplicationContext();
         if (view == null) {
             view = inflater.inflate(R.layout.memo_cell, null);
-            app.setAppFont((TextView) view.findViewById(R.id.memo_text));
-
         }
+        TextView tvMemo = (TextView)view.findViewById(R.id.memo_text);
+        tvMemo.setText(memo.getMemo());
+        app.setAppFont(tvMemo);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

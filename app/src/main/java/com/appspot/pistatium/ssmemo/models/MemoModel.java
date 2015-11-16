@@ -35,9 +35,10 @@ public class MemoModel {
         return memo;
     }
 
-    public void update(Memo memo) {
+    public void beginTransaction() {
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(memo);
+    }
+    public void commitTransaction() {
         realm.commitTransaction();
     }
 
