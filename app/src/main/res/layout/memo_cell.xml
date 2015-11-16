@@ -29,7 +29,7 @@
                 android:lines="5"
                 android:lineSpacingMultiplier="1.4"
                 android:textSize="20dp"
-                android:text="2015/11/16 会議\nほげ会議室\nTodo:\n * デザイン決定\n * タスク進捗確認" />
+ />
 
             <LinearLayout
                 android:layout_width="50dp"

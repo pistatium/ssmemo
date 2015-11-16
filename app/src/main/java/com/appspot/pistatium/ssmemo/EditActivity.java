@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.appspot.pistatium.ssmemo.models.Memo;
 import com.appspot.pistatium.ssmemo.models.MemoModel;
@@ -18,11 +19,14 @@ public class EditActivity extends AppCompatActivity {
 
     private Memo memo;
     private MemoModel memoModel;
+    private TextView tvInputMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+        tvInputMemo = (TextView)findViewById(R.id.tv_input_memo);
 
         memoModel = new MemoModel(getApplicationContext());
 
@@ -55,6 +59,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void onClickDone(View view) {
+        memo.setMemo(tvInputMemo.getText().toString());
         memoModel.update(memo);
         finishAfterTransition();
     }
