@@ -41,7 +41,7 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
             @Override
             public void onClick(View view) {
                 Context context = getContext();
-                Intent i = EditActivity.createIntent(context, memo);
+                Intent i = EditActivity.createIntent(context, memo.getId());
                 context.startActivity(i);
             }
         });

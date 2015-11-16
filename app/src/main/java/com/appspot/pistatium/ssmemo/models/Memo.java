@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by kimihiro on 2015/11/08.
  */
 public class Memo extends RealmObject implements Serializable {
 
+    @PrimaryKey
+    private Long id;
     private String title = "";
     private String memo = "";
     private Date createdAt = new Date();
@@ -17,6 +20,14 @@ public class Memo extends RealmObject implements Serializable {
     private Date dueAt;
     private int priority = 0;
     private int status = 1;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

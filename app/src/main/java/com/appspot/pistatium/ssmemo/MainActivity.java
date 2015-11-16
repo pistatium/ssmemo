@@ -8,16 +8,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.appspot.pistatium.ssmemo.adapters.MemoListAdapter;
-import com.appspot.pistatium.ssmemo.models.Memo;
 import com.appspot.pistatium.ssmemo.models.MemoModel;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import io.realm.RealmResults;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private MemoModel memoModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +26,25 @@ public class MainActivity extends AppCompatActivity {
         SSMemoApplication application = (SSMemoApplication)getApplicationContext();
 
         setContentView(R.layout.activity_main);
-        RealmResults memos = MemoModel.getList(getApplicationContext());
         application.setAppFont((TextView) findViewById(R.id.button_input_text));
         ListView lvMemo = (ListView) findViewById(R.id.memo_list);
+
+        memoModel = new MemoModel(getApplicationContext());
+
+        RealmResults memos = memoModel.getList();
+
         lvMemo.setDivider(null);
         lvMemo.setAdapter(new MemoListAdapter(this, R.id.memo_text, memos));
-
     }
 
     public void onClickEdit(View view) {
         Intent i = EditActivity.createIntent(getApplicationContext());
         startActivity(i);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        memoModel.close();
     }
 }
