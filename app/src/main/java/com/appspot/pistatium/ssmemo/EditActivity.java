@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.appspot.pistatium.ssmemo.models.Memo;
 import com.appspot.pistatium.ssmemo.models.MemoModel;
@@ -21,14 +19,14 @@ public class EditActivity extends AppCompatActivity {
 
     private Memo memo;
     private MemoModel memoModel;
-    private EditText tvInputMemo;
+    private EditText etInputMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        tvInputMemo = (EditText)findViewById(R.id.et_input_memo);
+        etInputMemo = (EditText)findViewById(R.id.et_input_memo);
 
         memoModel = new MemoModel(getApplicationContext());
 
@@ -38,8 +36,8 @@ public class EditActivity extends AppCompatActivity {
         if (memo == null) {
             memo = memoModel.create();
         }
-        Log.d("memo", "id:" + memo.getId());
-        Log.d("memo", "memo:" + memo.getMemo());
+        etInputMemo.setText(memo.getMemo());
+        ((SSMemoApplication)getApplicationContext()).setAppFont(etInputMemo);
     }
 
     @Override
@@ -61,7 +59,7 @@ public class EditActivity extends AppCompatActivity {
 
     public void onClickDone(View view) {
         memoModel.beginTransaction();
-        memo.setMemo(tvInputMemo.getText().toString());
+        memo.setMemo(etInputMemo.getText().toString());
         memo.setUpdatedAt(new Date());
         memoModel.commitTransaction();
         finishAfterTransition();
