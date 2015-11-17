@@ -35,9 +35,13 @@ public class MemoModel {
         return memo;
     }
 
-    public void setFav(Memo memo) {
+    public void toggleFav(Memo memo) {
+        int priority = Priority.HIGH.value;
+        if (memo.getPriority() == Priority.HIGH.value) {
+            priority = Priority.LOW.value;
+        }
         realm.beginTransaction();
-        memo.setPriority(Priority.HIGH.value);
+        memo.setPriority(priority);
         realm.commitTransaction();
     }
 

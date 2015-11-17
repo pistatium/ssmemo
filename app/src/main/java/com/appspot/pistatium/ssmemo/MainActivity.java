@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MemoCellInterface
 
     @Override
     public void onClickFav(Memo memo) {
-        memoModel.setFav(memo);
+        memoModel.toggleFav(memo);
         reloadList();
     }
 
