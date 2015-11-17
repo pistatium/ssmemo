@@ -18,8 +18,8 @@ public class Memo extends RealmObject implements Serializable {
     private Date createdAt = new Date();
     private Date updatedAt = new Date();
     private Date dueAt;
-    private int priority = 0;
-    private int status = 1;
+    private int priority = Priority.LOW.value;
+    private int status = Status.ACTIVE.value;
 
     public Long getId() {
         return id;

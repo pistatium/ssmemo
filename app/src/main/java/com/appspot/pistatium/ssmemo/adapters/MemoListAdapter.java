@@ -20,10 +20,12 @@ import java.util.List;
  */
 public class MemoListAdapter extends ArrayAdapter<Memo> {
 
+    private MemoCellInterface cellInterface;
     private LayoutInflater inflater;
 
-    public MemoListAdapter(Context context, int resource, List<Memo> objects) {
+    public MemoListAdapter(Context context, int resource, List<Memo> objects, MemoCellInterface cellInterface) {
         super(context, resource, objects);
+        this.cellInterface = cellInterface;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -38,6 +40,19 @@ public class MemoListAdapter extends ArrayAdapter<Memo> {
         TextView tvMemo = (TextView)view.findViewById(R.id.memo_text);
         tvMemo.setText(memo.getMemo());
         app.setAppFont(tvMemo);
+        view.findViewById(R.id.btn_memo_fav).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cellInterface.onClickFav(memo);
+
+            }
+        });
+        view.findViewById(R.id.btn_memo_delete).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cellInterface.onClickDelete(memo);
+            }
+        });
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -35,6 +35,24 @@ public class MemoModel {
         return memo;
     }
 
+    public void setFav(Memo memo) {
+        realm.beginTransaction();
+        memo.setPriority(Priority.HIGH.value);
+        realm.commitTransaction();
+    }
+
+    public void tmpDelete(Memo memo) {
+        realm.beginTransaction();
+        memo.setStatus(Status.TMP_DELETED.value);
+        realm.commitTransaction();
+    }
+
+    public void delete(Memo memo) {
+        realm.beginTransaction();
+        memo.removeFromRealm();
+        realm.commitTransaction();
+    }
+
     public void beginTransaction() {
         realm.beginTransaction();
     }
@@ -49,8 +67,12 @@ public class MemoModel {
 
     public RealmResults<Memo> getList() {
         RealmQuery<Memo> query = realm.where(Memo.class);
-        query.equalTo("status", 1);
-        return query.findAll();
+        query.equalTo("status", Status.ACTIVE.value);
+        RealmResults<Memo>result = query.findAll();
+        String[] sort_keys = {"priority", "id"};
+        boolean[] sort_orders = {RealmResults.SORT_ORDER_DESCENDING, RealmResults.SORT_ORDER_DESCENDING};
+        result.sort(sort_keys, sort_orders);
+        return result;
     }
 
 }

@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.appspot.pistatium.ssmemo.adapters.MemoCellInterface;
 import com.appspot.pistatium.ssmemo.adapters.MemoListAdapter;
+import com.appspot.pistatium.ssmemo.models.Memo;
 import com.appspot.pistatium.ssmemo.models.MemoModel;
 
 
@@ -15,9 +17,10 @@ import com.appspot.pistatium.ssmemo.models.MemoModel;
 import io.realm.RealmResults;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MemoCellInterface {
 
     private MemoModel memoModel;
+    private ListView lvMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         application.setAppFont((TextView) findViewById(R.id.button_input_text));
-        ListView lvMemo = (ListView) findViewById(R.id.memo_list);
+        lvMemo = (ListView) findViewById(R.id.memo_list);
+        lvMemo.setDivider(null);
 
         memoModel = new MemoModel(getApplicationContext());
 
-        RealmResults memos = memoModel.getList();
-
-        lvMemo.setDivider(null);
-        lvMemo.setAdapter(new MemoListAdapter(this, R.id.memo_text, memos));
+        reloadList();
     }
 
     public void onClickEdit(View view) {
@@ -46,5 +47,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         memoModel.close();
+    }
+
+    @Override
+    public void onClickFav(Memo memo) {
+        memoModel.setFav(memo);
+        reloadList();
+    }
+
+    @Override
+    public void onClickDelete(Memo memo) {
+        memoModel.tmpDelete(memo);
+        reloadList();
+    }
+
+
+    private void reloadList() {
+        RealmResults memos = memoModel.getList();
+        lvMemo.setAdapter(new MemoListAdapter(this, R.id.memo_text, memos, this));
     }
 }
