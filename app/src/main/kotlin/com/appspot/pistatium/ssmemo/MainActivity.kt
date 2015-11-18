@@ -12,14 +12,14 @@ import com.appspot.pistatium.ssmemo.adapters.MemoListAdapter
 import com.appspot.pistatium.ssmemo.models.Memo
 import com.appspot.pistatium.ssmemo.models.MemoModel
 
-
-import io.realm.RealmResults
+import kotlinx.android.synthetic.activity_main.*
+import kotlin.properties.Delegates
 
 
 class MainActivity : AppCompatActivity(), MemoCellInterface {
 
-    private var memoModel: MemoModel? = null
-    private var lvMemo: ListView? = null
+    private var memoModel: MemoModel by Delegates.notNull()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
 
         setContentView(R.layout.activity_main)
         application.setAppFont(findViewById(R.id.button_input_text) as TextView)
-        lvMemo = findViewById(R.id.memo_list) as ListView
-        lvMemo!!.divider = null
+        memo_list.divider = null
 
         memoModel = MemoModel(applicationContext)
 
@@ -43,22 +42,22 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
 
     override fun onDestroy() {
         super.onDestroy()
-        memoModel!!.close()
+        memoModel.close()
     }
 
     override fun onClickFav(memo: Memo) {
-        memoModel!!.toggleFav(memo)
+        memoModel.toggleFav(memo)
         reloadList()
     }
 
     override fun onClickDelete(memo: Memo) {
-        memoModel!!.tmpDelete(memo)
+        memoModel.tmpDelete(memo)
         reloadList()
     }
 
 
     private fun reloadList() {
-        val memos = memoModel!!.list
-        lvMemo!!.adapter = MemoListAdapter(this, R.id.memo_text, memos, this)
+        val memos = memoModel.list
+        memo_list.adapter = MemoListAdapter(this, R.id.memo_text, memos, this)
     }
 }

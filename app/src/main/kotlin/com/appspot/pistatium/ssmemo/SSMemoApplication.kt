@@ -45,9 +45,12 @@ class SSMemoApplication : Application() {
         if (File(unzip_path).exists()) {
             return unzip_path
         }
+
         try {
             val fos = openFileOutput(unzip_name, Context.MODE_PRIVATE)
-            assets.open(filename).copyTo(fos)
+            val zip = ZipInputStream(assets.open(filename))
+            zip.nextEntry
+            zip.copyTo(fos)
             fos.close()
         } catch (e: Exception) {
             e.printStackTrace()

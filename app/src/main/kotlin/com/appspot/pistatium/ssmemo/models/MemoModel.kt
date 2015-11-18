@@ -75,5 +75,4 @@ class MemoModel(context: Context) {
             result.sort(sort_keys, sort_orders)
             return result
         }
-
 }
