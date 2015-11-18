@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.appspot.pistatium.ssmemo.EditActivity
 import com.appspot.pistatium.ssmemo.R
 import com.appspot.pistatium.ssmemo.SSMemoApplication
-import com.appspot.pistatium.ssmemo.adapters.MemoCellInterface
+import com.appspot.pistatium.ssmemo.interfaces.MemoCellInterface
 import com.appspot.pistatium.ssmemo.models.Memo
 import com.appspot.pistatium.ssmemo.models.Priority
 import kotlin.properties.Delegates
