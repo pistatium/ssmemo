@@ -21,7 +21,7 @@ class MemoModel(context: Context) {
         realm?.close()
     }
 
-    fun create(): Memo? {
+    fun create(): Memo {
         var memo = Memo()
         val uniqueId = System.currentTimeMillis()
         memo.id = uniqueId

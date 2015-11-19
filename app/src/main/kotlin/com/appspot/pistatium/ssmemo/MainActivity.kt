@@ -20,18 +20,16 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
 
     private var memoModel: MemoModel by Delegates.notNull()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         val application = applicationContext as SSMemoApplication
+        application.setAppFont(button_input_text)
 
-        setContentView(R.layout.activity_main)
-        application.setAppFont(findViewById(R.id.button_input_text) as TextView)
         memo_list.divider = null
 
         memoModel = MemoModel(applicationContext)
-
         reloadList()
     }
 
@@ -54,7 +52,6 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
         memoModel.tmpDelete(memo)
         reloadList()
     }
-
 
     private fun reloadList() {
         val memos = memoModel.list

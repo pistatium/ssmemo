@@ -19,25 +19,25 @@ class SSMemoApplication : Application() {
 
     private var app_font: Typeface? = null
     override fun onCreate() {
-        //アセットからTypeface作成
         super.onCreate()
         loadAppFont()
     }
 
-    fun loadAppFont() {
+
+    fun setAppFont(view: TextView) {
+        app_font.let {
+            view.typeface = app_font
+        }
+    }
+
+    private fun loadAppFont(): Unit {
         if (app_font != null) {
             return
         }
-
         val font_file = unzipFile("fonts/JKG-M_3.zip")
         app_font = Typeface.createFromFile(font_file)
     }
 
-    fun setAppFont(view: TextView) {
-        if (app_font != null) {
-            view.typeface = app_font
-        }
-    }
 
     private fun unzipFile(filename: String): String {
         val unzip_name = (filename + ".unzip").replace("/", "_")
