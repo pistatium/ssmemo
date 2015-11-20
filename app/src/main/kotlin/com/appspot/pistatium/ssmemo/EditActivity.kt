@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
 
@@ -19,6 +20,7 @@ class EditActivity : AppCompatActivity() {
 
     private var memo: Memo by Delegates.notNull()
     private var memoModel: MemoModel by Delegates.notNull()
+    private var isCreate = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +29,14 @@ class EditActivity : AppCompatActivity() {
         memoModel = MemoModel(applicationContext)
 
         val memo_id = intent.getLongExtra(EXTRA_MEMO_KEY, ID_NOT_SET)
-        memo = memoModel.findById(memo_id) ?: memoModel.create()
+
+        val saved = memoModel.findById(memo_id)
+        memo = if (saved != null) {
+            saved
+        } else {
+            isCreate = true
+            memoModel.create()
+        }
 
         et_input_memo.setText(memo.memo)
         (applicationContext as SSMemoApplication).setAppFont(et_input_memo as TextView)
@@ -38,6 +47,18 @@ class EditActivity : AppCompatActivity() {
         memoModel.close()
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (et_input_memo.text.toString() == "") {
+                if (isCreate) {
+                    memoModel.delete(memo)
+                }
+                finishAfterTransition()
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     fun onClickDone(view: View) {
         memoModel.beginTransaction()
         memo.memo = et_input_memo.text.toString()
@@ -45,6 +66,8 @@ class EditActivity : AppCompatActivity() {
         memoModel.commitTransaction()
         finishAfterTransition()
     }
+
+
 
     companion object {
 
