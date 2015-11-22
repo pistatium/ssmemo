@@ -26,14 +26,9 @@ class MemoListAdapter(context: Context, resource: Int, objects: List<Memo>, priv
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view: MemoCellLayout
         val memo = getItem(position)
-        if (convertView == null) {
-            view = inflater.inflate(R.layout.memo_cell, null) as MemoCellLayout
-        } else {
-            view = convertView as MemoCellLayout
-        }
-        view.bindView(memo, cellInterface)
+        val view = convertView ?: inflater.inflate(R.layout.memo_cell, null)
+        (view as MemoCellLayout).bindView(memo, cellInterface)
         return view
     }
 }

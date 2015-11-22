@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 
 import com.appspot.pistatium.ssmemo.models.Memo
@@ -13,42 +13,61 @@ import com.appspot.pistatium.ssmemo.models.MemoModel
 
 import java.util.Date
 
+import kotlinx.android.synthetic.activity_edit.*
+import kotlin.properties.Delegates
+
 class EditActivity : AppCompatActivity() {
 
-    private var memo: Memo? = null
-    private var memoModel: MemoModel? = null
-    private var etInputMemo: EditText? = null
+    private var memo: Memo by Delegates.notNull()
+    private var memoModel: MemoModel by Delegates.notNull()
+    private var isCreate = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
 
-        etInputMemo = findViewById(R.id.et_input_memo) as EditText
-
         memoModel = MemoModel(applicationContext)
 
         val memo_id = intent.getLongExtra(EXTRA_MEMO_KEY, ID_NOT_SET)
-        memo = memoModel!!.findById(memo_id)
 
-        if (memo == null) {
-            memo = memoModel!!.create()
+        val saved = memoModel.findById(memo_id)
+        memo = if (saved != null) {
+            saved
+        } else {
+            isCreate = true
+            memoModel.create()
         }
-        etInputMemo!!.setText(memo!!.memo)
-        (applicationContext as SSMemoApplication).setAppFont(etInputMemo as TextView)
+
+        et_input_memo.setText(memo.memo)
+        (applicationContext as SSMemoApplication).setAppFont(et_input_memo as TextView)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        memoModel!!.close()
+        memoModel.close()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (et_input_memo.text.toString() == "") {
+                if (isCreate) {
+                    memoModel.delete(memo)
+                }
+                finishAfterTransition()
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     fun onClickDone(view: View) {
-        memoModel!!.beginTransaction()
-        memo!!.memo = etInputMemo!!.text.toString()
-        memo!!.updatedAt = Date()
-        memoModel!!.commitTransaction()
+        memoModel.beginTransaction()
+        memo.memo = et_input_memo.text.toString()
+        memo.updatedAt = Date()
+        memoModel.commitTransaction()
         finishAfterTransition()
     }
+
+
 
     companion object {
 
@@ -56,8 +75,7 @@ class EditActivity : AppCompatActivity() {
         internal val ID_NOT_SET: Long = -1
 
         fun createIntent(context: Context): Intent {
-            val i = Intent(context, EditActivity::class.java)
-            return i
+            return Intent(context, EditActivity::class.java)
         }
 
         fun createIntent(context: Context, memoId: Long): Intent {
