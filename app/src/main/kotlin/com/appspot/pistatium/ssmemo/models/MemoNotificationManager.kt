@@ -19,7 +19,7 @@ class MemoNotificationManager(context:Context) {
         val builder = Notification.Builder(context)
         val manager = NotificationManagerCompat.from(context)
         val memoId = getNotificationId(memo)
-        builder.setSmallIcon(R.mipmap.icon512)
+        builder.setSmallIcon(R.mipmap.icon_notice)
         builder.setContentTitle(context.getString(R.string.app_name))
         builder.setContentText(memo.memo)
         val intent = EditActivity.createIntent(context, memo.id)
