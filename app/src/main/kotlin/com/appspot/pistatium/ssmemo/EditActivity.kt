@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
@@ -28,17 +29,8 @@ class EditActivity : AppCompatActivity() {
 
         memoModel = MemoModel(applicationContext)
 
-        val memo_id = intent.getLongExtra(EXTRA_MEMO_KEY, ID_NOT_SET)
+        memo = checkLaunchOptions()
 
-        val saved = memoModel.findById(memo_id)
-        memo = if (saved != null) {
-            saved
-        } else {
-            isCreate = true
-            memoModel.create()
-        }
-
-        et_input_memo.setText(memo.memo)
         (applicationContext as SSMemoApplication).setAppFont(et_input_memo as TextView)
     }
 
@@ -67,6 +59,25 @@ class EditActivity : AppCompatActivity() {
         finishAfterTransition()
     }
 
+
+    private fun checkLaunchOptions():Memo {
+        val memo_id = intent.getLongExtra(EXTRA_MEMO_KEY, ID_NOT_SET)
+
+        val saved = memoModel.findById(memo_id)
+
+        if (saved != null) {
+            et_input_memo.setText(saved.memo)
+            return saved
+        }
+
+        if (Intent.ACTION_SEND.equals(intent.action)) {
+            val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+            Log.d("intent", text)
+            et_input_memo.setText(text)
+        }
+        isCreate = true
+        return memoModel.create()
+    }
 
 
     companion object {
