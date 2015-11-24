@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Nagareboshi</string>
     <string name="input_here">+ Input here.</string>
+    <string name="copied_memo">Memo has been copied to clipboard.</string>
 </resources>
