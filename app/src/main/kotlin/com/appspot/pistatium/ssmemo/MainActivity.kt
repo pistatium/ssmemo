@@ -11,6 +11,8 @@ import com.appspot.pistatium.ssmemo.interfaces.MemoCellInterface
 import com.appspot.pistatium.ssmemo.adapters.MemoListAdapter
 import com.appspot.pistatium.ssmemo.models.Memo
 import com.appspot.pistatium.ssmemo.models.MemoModel
+import com.appspot.pistatium.ssmemo.models.MemoNotificationManager
+import com.appspot.pistatium.ssmemo.models.Priority
 
 import kotlinx.android.synthetic.activity_main.*
 import kotlin.properties.Delegates
@@ -45,6 +47,10 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
 
     override fun onClickFav(memo: Memo) {
         memoModel.toggleFav(memo)
+        if (memo.priority == Priority.HIGH.value) {
+            val manager = MemoNotificationManager(applicationContext)
+            manager.notify(memo)
+        }
         reloadList()
     }
 
