@@ -1,5 +1,7 @@
 package com.appspot.pistatium.ssmemo.layouts
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -8,6 +10,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 
 import com.appspot.pistatium.ssmemo.EditActivity
 import com.appspot.pistatium.ssmemo.R
@@ -54,6 +57,14 @@ class MemoCellLayout(context: Context, attrs: AttributeSet) : LinearLayout(conte
         this.setOnClickListener {
             val i = EditActivity.createIntent(context, memo.id)
             context.startActivity(i)
+        }
+
+        this.setOnLongClickListener {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val data = ClipData.newPlainText(memo.memo, memo.memo)
+            clipboard.primaryClip = data
+            Toast.makeText(context, R.string.copied_memo, Toast.LENGTH_SHORT).show()
+            true
         }
     }
 }
