@@ -35,6 +35,11 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
         reloadList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        reloadList()
+    }
+    
     fun onClickEdit(view: View) {
         val i = EditActivity.createIntent(applicationContext)
         startActivity(i)
