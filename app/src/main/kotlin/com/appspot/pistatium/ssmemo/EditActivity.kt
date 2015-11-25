@@ -1,9 +1,11 @@
 package com.appspot.pistatium.ssmemo
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -43,20 +45,37 @@ class EditActivity : AppCompatActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (et_input_memo.text.toString() == "") {
                 if (isCreate) {
-                    memoModel.delete(memo)
+                    destroyMemo()
                 }
                 finishAfterTransition()
             }
+            AlertDialog.Builder(this).setTitle(R.string.on_exit_dialog)
+                .setPositiveButton(R.string.save, { dialogInterface: DialogInterface?, i: Int ->
+                    saveMemo()
+                    finishAfterTransition()
+                }).setNegativeButton(R.string.destroy, { dialogInterface: DialogInterface?, i: Int ->
+                    destroyMemo()
+                    finishAfterTransition()
+            }
+            ).show()
         }
         return super.onKeyDown(keyCode, event)
     }
 
     fun onClickDone(view: View) {
+        saveMemo()
+        finishAfterTransition()
+    }
+
+    private fun saveMemo() {
         memoModel.beginTransaction()
         memo.memo = et_input_memo.text.toString()
         memo.updatedAt = Date()
         memoModel.commitTransaction()
-        finishAfterTransition()
+    }
+
+    private fun destroyMemo() {
+        memoModel.delete(memo)
     }
 
 

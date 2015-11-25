@@ -2,4 +2,7 @@
     <string name="app_name">Nagareboshi</string>
     <string name="input_here">+ メモを作成</string>
     <string name="copied_memo">クリップボードにコピーしました.</string>
+    <string name="on_exit_dialog">変更内容を保存しますか?</string>
+    <string name="save">保存</string>
+    <string name="destroy">破棄</string>
 </resources>
