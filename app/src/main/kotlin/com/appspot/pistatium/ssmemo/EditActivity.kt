@@ -43,21 +43,30 @@ class EditActivity : AppCompatActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (et_input_memo.text.toString() == "") {
+            val inputText = et_input_memo.text.toString()
+            if (inputText == "") {
                 if (isCreate) {
                     destroyMemo()
                 }
                 finishAfterTransition()
+                return true
+            }
+            if (inputText == memo.memo) {
+                finishAfterTransition()
+                return true
             }
             AlertDialog.Builder(this).setTitle(R.string.on_exit_dialog)
                 .setPositiveButton(R.string.save, { dialogInterface: DialogInterface?, i: Int ->
                     saveMemo()
                     finishAfterTransition()
                 }).setNegativeButton(R.string.destroy, { dialogInterface: DialogInterface?, i: Int ->
-                    destroyMemo()
+                    if (memo.memo == "") {
+                        destroyMemo()
+                    }
                     finishAfterTransition()
             }
             ).show()
+            return true
         }
         return super.onKeyDown(keyCode, event)
     }
