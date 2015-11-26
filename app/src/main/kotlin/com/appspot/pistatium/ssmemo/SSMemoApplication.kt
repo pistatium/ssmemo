@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.res.AssetManager
 import android.graphics.Typeface
 import android.widget.TextView
+import com.appspot.pistatium.ssmemo.models.BooleanPref
+import com.appspot.pistatium.ssmemo.models.MemoModel
 
 import java.io.File
 import java.io.FileOutputStream
@@ -21,6 +23,10 @@ class SSMemoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         loadAppFont()
+        if (BooleanPref.IS_FIRST_LAUNCH.get(applicationContext)) {
+            createInitialMemo()
+            BooleanPref.IS_FIRST_LAUNCH.set(applicationContext, false)
+        }
     }
 
 
@@ -57,5 +63,13 @@ class SSMemoApplication : Application() {
         }
 
         return unzip_path
+    }
+
+    private fun createInitialMemo() {
+        val model = MemoModel(applicationContext)
+        val memo = model.create()
+        model.beginTransaction()
+        memo.memo = getString(R.string.welcome_memo)
+        model.commitTransaction()
     }
 }

@@ -5,4 +5,5 @@
     <string name="on_exit_dialog">Do you save contents for change?</string>
     <string name="save">Save</string>
     <string name="destroy">Ignore</string>
+    <string name="welcome_memo">Welcome to Nagareboshi.</string>
 </resources>

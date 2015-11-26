@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
         super.onResume()
         reloadList()
     }
-    
+
     fun onClickEdit(view: View) {
         val i = EditActivity.createIntent(applicationContext)
         startActivity(i)
