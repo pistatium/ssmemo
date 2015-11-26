@@ -37,6 +37,8 @@
                     android:layout_weight="1"
                     android:gravity="top|start"
                     android:singleLine="false"
+                    android:lineSpacingMultiplier="1.4"
+                    android:autoLink="all"
                     android:textSize="@dimen/main_text_size"
                     android:transitionName="target">
 
