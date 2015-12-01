@@ -18,3 +18,7 @@ proguard/
 app/build/
 build/
 .DS_Store
+
+
+# Specific prperties
+ads.properties
