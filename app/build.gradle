@@ -14,7 +14,7 @@ android {
         applicationId "com.appspot.pistatium.ssmemo"
         minSdkVersion 21
         targetSdkVersion 22
-        //multiDexEnabled true
+        multiDexEnabled false
         versionCode 1
         versionName "1.0"
         buildConfigField("String", "ASUTA_ICON_AD", props['asuta_icon_id'])
@@ -29,6 +29,9 @@ android {
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+    packagingOptions {
+        exclude "lib/arm64-v8a/librealm-jni.so"
     }
 }
 

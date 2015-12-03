@@ -7,7 +7,6 @@ import android.widget.TextView
 import com.appspot.pistatium.ssmemo.models.BooleanPref
 import com.appspot.pistatium.ssmemo.models.MemoModel
 import com.google.android.gms.analytics.GoogleAnalytics
-import com.google.android.gms.analytics.Logger
 import com.google.android.gms.analytics.Tracker
 
 import java.io.File
@@ -30,11 +29,12 @@ class SSMemoApplication : Application() {
         }
     }
 
-    fun getDefaultTracker() {
+    fun getDefaultTracker(): Tracker? {
         if (tracker == null) {
             val ga = GoogleAnalytics.getInstance(this)
             tracker = ga.newTracker(R.xml.global_tracker)
         }
+        return tracker
     }
 
     fun setAppFont(view: TextView) {
