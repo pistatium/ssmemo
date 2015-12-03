@@ -2,16 +2,15 @@ package com.appspot.pistatium.ssmemo
 
 import android.app.Application
 import android.content.Context
-import android.content.res.AssetManager
 import android.graphics.Typeface
 import android.widget.TextView
 import com.appspot.pistatium.ssmemo.models.BooleanPref
 import com.appspot.pistatium.ssmemo.models.MemoModel
+import com.google.android.gms.analytics.GoogleAnalytics
+import com.google.android.gms.analytics.Logger
+import com.google.android.gms.analytics.Tracker
 
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
 /**
@@ -20,6 +19,8 @@ import java.util.zip.ZipInputStream
 class SSMemoApplication : Application() {
 
     private var app_font: Typeface? = null
+    private var tracker: Tracker? = null
+
     override fun onCreate() {
         super.onCreate()
         loadAppFont()
@@ -29,6 +30,12 @@ class SSMemoApplication : Application() {
         }
     }
 
+    fun getDefaultTracker() {
+        if (tracker == null) {
+            val ga = GoogleAnalytics.getInstance(this)
+            tracker = ga.newTracker(R.xml.global_tracker)
+        }
+    }
 
     fun setAppFont(view: TextView) {
         app_font.let {

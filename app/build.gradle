@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     def Properties props = new Properties()
     def propFile = file('../ads.properties')
@@ -14,7 +14,7 @@ android {
         applicationId "com.appspot.pistatium.ssmemo"
         minSdkVersion 21
         targetSdkVersion 22
-        multiDexEnabled true
+        //multiDexEnabled true
         versionCode 1
         versionName "1.0"
         buildConfigField("String", "ASUTA_ICON_AD", props['asuta_icon_id'])
@@ -43,8 +43,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'com.google.android.gms:play-services:8.3.0'
-    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.google.android.gms:play-services-analytics:8.1.0'
     kapt 'io.realm:realm-android:0.85.1'
 
 }
