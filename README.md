@@ -4,7 +4,9 @@ Nagareboshi is the memo pad application for Android.
 
 ## Download
 
-I'm preparing
+__GooglePlay__
+
+https://play.google.com/store/apps/details?id=com.appspot.pistatium.ssmemo
 
 ## Features
 
