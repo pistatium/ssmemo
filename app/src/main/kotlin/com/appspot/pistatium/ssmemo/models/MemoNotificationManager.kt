@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.support.v4.app.NotificationManagerCompat
+import android.support.v4.content.ContextCompat
 
 import com.appspot.pistatium.ssmemo.EditActivity
 import com.appspot.pistatium.ssmemo.R
@@ -19,9 +20,12 @@ class MemoNotificationManager(context:Context) {
         val builder = Notification.Builder(context)
         val manager = NotificationManagerCompat.from(context)
         val memoId = getNotificationId(memo)
+        val app_color = ContextCompat.getColor(context, R.color.colorPrimary)
         builder.setSmallIcon(R.mipmap.icon_notice)
         builder.setContentTitle(context.getString(R.string.app_name))
         builder.setContentText(memo.memo)
+        builder.setColor(app_color)
+        builder.setVisibility(Notification.VISIBILITY_PUBLIC)
         val intent = EditActivity.createIntent(context, memo.id)
         val contentIntent = PendingIntent.getActivity(context, memoId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         builder.setContentIntent(contentIntent)

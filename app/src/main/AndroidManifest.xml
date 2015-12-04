@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appspot.pistatium.ssmemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:name=".SSMemoApplication"
         android:allowBackup="true"
@@ -29,6 +32,20 @@
                 <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
+
+
+        <receiver android:name="jp.maru.mrd.CvReceiver" android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="jp.maru.mrd.ACTION_CV" />
+            </intent-filter>
+        </receiver>
+        <service android:name="jp.maru.mrd.CvReporter" android:exported="false">
+        </service>
+
     </application>
 
 </manifest>

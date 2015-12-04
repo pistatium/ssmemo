@@ -13,6 +13,8 @@ import com.appspot.pistatium.ssmemo.models.Memo
 import com.appspot.pistatium.ssmemo.models.MemoModel
 import com.appspot.pistatium.ssmemo.models.MemoNotificationManager
 import com.appspot.pistatium.ssmemo.models.Priority
+import com.google.android.gms.analytics.HitBuilders
+import jp.maru.mrd.IconLoader
 
 import kotlinx.android.synthetic.activity_main.*
 import kotlin.properties.Delegates
@@ -21,6 +23,7 @@ import kotlin.properties.Delegates
 class MainActivity : AppCompatActivity(), MemoCellInterface {
 
     private var memoModel: MemoModel by Delegates.notNull()
+    private var iconLoader: IconLoader<Int>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +35,20 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
         memo_list.divider = null
 
         memoModel = MemoModel(applicationContext)
+        initAds()
         reloadList()
+        trackActivity()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        iconLoader?.startLoading()
+        reloadList()
+    }
+
+    override fun onPause() {
+        iconLoader?.stopLoading()
+        super.onPause()
     }
 
     fun onClickEdit(view: View) {
@@ -59,8 +75,22 @@ class MainActivity : AppCompatActivity(), MemoCellInterface {
         reloadList()
     }
 
-    private fun reloadList() {
+    private fun reloadList(): Unit {
         val memos = memoModel.list
         memo_list.adapter = MemoListAdapter(this, R.id.memo_text, memos, this)
+    }
+
+    private fun initAds(): Unit {
+        iconLoader = IconLoader<Int>(BuildConfig.ASUTA_ICON_AD, this)
+        iconLoader?.let {
+            asuta_icon_cell.addToIconLoader(iconLoader)
+            asuta_icon_cell.titleColor = getColor(R.color.baseBackground)
+        }
+    }
+
+    private fun trackActivity() {
+        val tracker = (application as SSMemoApplication).getDefaultTracker()
+        tracker?.setScreenName(this.localClassName)
+        tracker?.send(HitBuilders.ScreenViewBuilder().build())
     }
 }

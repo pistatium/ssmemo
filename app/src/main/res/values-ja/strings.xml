@@ -2,4 +2,13 @@
     <string name="app_name">Nagareboshi</string>
     <string name="input_here">+ メモを作成</string>
     <string name="copied_memo">クリップボードにコピーしました.</string>
+    <string name="on_exit_dialog">変更内容を保存しますか?</string>
+    <string name="save">保存</string>
+    <string name="destroy">破棄</string>
+    <string name="welcome_memo"># Nagareboshiの使い方\n\n
+        * メモの白い部分を押すと詳細が見れます。\n
+        * 右側の★を押すと、そのメモをリストの上部に固定することが出来ます。また同時に通知バーにもメモが出現しいつでも見ることができるようになります。\n
+        * ゴミ箱を押すことでメモの削除も出来ます。\n
+        * メモをコピーしたいときは白い部分を長押ししてください。
+    </string>
 </resources>
